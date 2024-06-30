@@ -63,7 +63,7 @@ class Robot : Player
                 Node node = new Node(move, newPosition);
 
                 MoveTree treeRoot = new MoveTree(node);
-                MoveTree movetree = moveTree(treeRoot, newPosition, enemy, me, level, treeRoot.Root());
+                MoveTree movetree = moveTree(treeRoot, newPosition, enemy, me, level, treeRoot.Root(), level);
 
                 movetrees[movetree.Root().Eval()] = movetree;
             }
@@ -72,7 +72,7 @@ class Robot : Player
         return movetrees;
     }
 
-    private MoveTree moveTree(MoveTree _movetree, Board _position, Robot me, Robot enemy, int level, Node _root)
+    private MoveTree moveTree(MoveTree _movetree, Board _position, Robot me, Robot enemy, int level, Node _root, int initialLevel)
     {
         if (level == 0)
         {
@@ -95,9 +95,11 @@ class Robot : Player
                 node = new Node(move, newPosition);
 
                 _movetree = _movetree.Insert(node, _root);
-                _movetree = moveTree(_movetree, newPosition, enemy, me, level - 1, node);
+                _movetree = moveTree(_movetree, newPosition, enemy, me, level - 1, node, initialLevel);
 
-                //possiblePositions[newPosition.FEN()] = _movetree.bestChildNode(node).Value();
+                if (initialLevel == level) {
+                    possiblePositions[newPosition.FEN()] = _movetree.bestChildNode(node).Value();
+                }
             }
         }
 

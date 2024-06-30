@@ -46,15 +46,15 @@ public sealed class Game
 
         while (!chessBoard.GameOver())
         {
-            move = Robot0.Calculate(chessBoard, 1);
+            move = Robot0.Calculate(chessBoard, 2);
             chessBoard = chessBoard.Update(move);
-            chessBoard.Print();
+            chessBoard.Print(chessBoard.FEN());
 
             if (chessBoard.GameOver()) break;
 
             move = Robot1.Calculate(chessBoard, 2);
             chessBoard = chessBoard.Update(move);
-            chessBoard.Print();
+            chessBoard.Print(chessBoard.FEN());
         }
 
         WinnerPrompt(chessBoard);

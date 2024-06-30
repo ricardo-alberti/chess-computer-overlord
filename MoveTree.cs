@@ -25,8 +25,8 @@ public sealed class MoveTree
     private Node InsertIntoNode(Node _move, Node _node, Node _root)
     {
         if (root.Children().Count > 0) {
-            Node best1 = bestChildNode(root);
-            root.Eval(best1.Eval());
+            Node best = bestChildNode(root);
+            root.Eval(best.Eval());
         }
 
         if (_root == _node)
