@@ -1,18 +1,14 @@
 class Robot : Player
 {
     private readonly int side;
-    private readonly Board board;
-    private readonly string name;
     private readonly Dictionary<string, Move> possiblePositions;
 
-    public Robot() : this(0, new Board(), new Dictionary<string, Move>(), "robot") { }
+    public Robot() : this(0, new Dictionary<string, Move>()) { }
 
-    public Robot(int _side, Board _chessBoard, Dictionary<string, Move> _positions, string _name) : base(_side, _chessBoard, _name)
+    public Robot(int _side, Dictionary<string, Move> _positions) : base(_side)
     {
         side = _side;
         possiblePositions = _positions;
-        board = _chessBoard;
-        name = _name;
     }
 
     private int[] PiecesIds(Dictionary<Point, ChessPiece> pieces)
@@ -29,15 +25,17 @@ class Robot : Player
     public Move Calculate(Board _position, int level)
     {
         string FEN = _position.FEN();
+        /*
         if (possiblePositions.ContainsKey(FEN)) 
         {
             Move move = possiblePositions[FEN];
             return move;
         }
+        */
 
         Dictionary<int, MoveTree> moveMap = new Dictionary<int, MoveTree>();
-        Robot me = new Robot(Side(), _position, new Dictionary<string, Move>(), "robot1");
-        Robot enemy = new Robot(Side() == 1 ? 0 : 1, _position, new Dictionary<string, Move>(), "robot2");
+        Robot me = new Robot(Side(), new Dictionary<string, Move>());
+        Robot enemy = new Robot(Side() == 1 ? 0 : 1, new Dictionary<string, Move>());
         Board position = _position.Copy();
 
         Dictionary<int, MoveTree> movetrees = moveTrees(position, me, enemy, new Dictionary<int, MoveTree>(), level);

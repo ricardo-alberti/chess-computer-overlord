@@ -49,6 +49,26 @@ public abstract class ChessPiece
         return side;
     }
 
+    public ChessPiece Promote(char notation)
+    {
+        return CreatePiece(notation, position, side, id);
+    }
+
+    public int[,] MoveSet()
+    {
+        return moveSet;
+    }
+
+    public Point Position()
+    {
+        return position;
+    }
+
+    public ChessPiece Copy()
+    {
+        return CreatePiece(notation, position, side, id);
+    }
+
     public void PrintMoveRange(List<Move> moveRange)
     {
         foreach (Move move in moveRange)
@@ -100,26 +120,6 @@ public abstract class ChessPiece
         }
 
         return moveRange;
-    }
-
-    public ChessPiece Promote(char notation)
-    {
-        return CreatePiece(notation, position, side, id);
-    }
-
-    public int[,] MoveSet()
-    {
-        return moveSet;
-    }
-
-    public Point Position()
-    {
-        return position;
-    }
-
-    public ChessPiece Copy()
-    {
-        return CreatePiece(notation, position, side, id);
     }
 
     public static ChessPiece CreatePiece(char notation, Point position, int side, int id)

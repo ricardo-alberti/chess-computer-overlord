@@ -31,10 +31,5 @@ public class Tile
     {
         return position;
     }
-
-    public string Print()
-    {
-        return piece.Shape();
-    }
 }
 

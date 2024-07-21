@@ -1,7 +1,13 @@
-class King : ChessPiece
+class Knight : ChessPiece
 {
-    public King(Point position, int side, int id)
-        : base(id, side == 1 ? 'K' : 'k', side == 1 ? " \u2654" : " \u265A", position, new int[,] { { 0, -1 }, { 0, 1 }, { 1, 0 }, { 1, 1 }, { -1, 0 }, { -1, -1 }, { 1, -1 }, { -1, -1 } }, side, 500)
+    public Knight(Point position, int side, int id)
+            : base(id, 
+                   side == 1 ? 'N' : 'n',
+                   side == 1 ? " \u2658" : " \u265E",
+                   position, 
+                   new int[,] { { 2, 1 }, { 2, -1 }, { -2, 1 }, { -2, -1 }, { 1, 2 }, { -1, 2 }, { 1, -2 }, { -1, -2 } },
+                   side,
+                   3)
     {
 
     }

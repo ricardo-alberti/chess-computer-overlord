@@ -1,8 +1,8 @@
 public sealed class Game
 {
-    private Game() { }
-    private static Game _instance;
-    public static Game Instance()
+    private         Game() { }
+    private static  Game _instance;
+    public static   Game Instance()
     {
         if (_instance == null)
         {
@@ -33,30 +33,30 @@ public sealed class Game
 
     public void Start()
     {
-        Board chessBoard = new Board();
+        DefaultPiecesSet pieces = new DefaultPiecesSet();
+        Board board             = new Board(pieces.White(), pieces.Black());
+        Robot Robot0            = new Robot(1, new Dictionary<string, Move>());
+        Robot Robot1            = new Robot(0, new Dictionary<string, Move>());
+        Move move               = new Move();
+        MoveTree movetree       = new MoveTree();
+        View view               = new View();
 
-        Robot Robot0 = new Robot(1, chessBoard, new Dictionary<string, Move>(), "robot1");
-        Robot Robot1 = new Robot(0, chessBoard, new Dictionary<string, Move>(), "robot2");
+        board.SetPieces(board.WhitePieces(), board.BlackPieces());
+        view.PrintBoard(board);
 
-        Move move = new Move();
-        MoveTree movetree = new MoveTree();
-
-        chessBoard.SetPieces();
-        chessBoard.Print();
-
-        while (!chessBoard.GameOver())
+        while (!board.GameOver())
         {
-            move = Robot0.Calculate(chessBoard, 2);
-            chessBoard = chessBoard.Update(move);
-            chessBoard.Print(chessBoard.FEN());
+            move = Robot0.Calculate(board, 0);
+            board = board.Update(move);
+            view.PrintBoard(board);
 
-            if (chessBoard.GameOver()) break;
+            if (board.GameOver()) break;
 
-            move = Robot1.Calculate(chessBoard, 2);
-            chessBoard = chessBoard.Update(move);
-            chessBoard.Print(chessBoard.FEN());
+            move = Robot1.Calculate(board, 0);
+            board = board.Update(move);
+            view.PrintBoard(board);
         }
 
-        WinnerPrompt(chessBoard);
+        WinnerPrompt(board);
     }
 }
