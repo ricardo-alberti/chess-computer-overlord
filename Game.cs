@@ -11,6 +11,35 @@ public sealed class Game
         return _instance;
     }
 
+    public void Start()
+    {
+        DefaultPiecesSet pieces = new DefaultPiecesSet();
+        Board board             = new Board(pieces.White(), pieces.Black());
+        Robot whiteBot          = new Robot(1, new Dictionary<string, MoveTree>());
+        Robot blackBot          = new Robot(0, new Dictionary<string, MoveTree>());
+        Move move               = new Move();
+        MoveTree movetree       = new MoveTree();
+        View view               = new View();
+
+        board.SetPieces(board.WhitePieces(), board.BlackPieces());
+        view.PrintBoard(board);
+
+        while (!board.GameOver())
+        {
+            move = whiteBot.Calculate(board, 1);
+            board = whiteBot.Play(move, board);
+            view.PrintBoard(board);
+
+            if (board.GameOver()) break;
+
+            move = blackBot.Calculate(board, 2);
+            board = blackBot.Play(move, board);
+            view.PrintBoard(board);
+        }
+
+        WinnerPrompt(board);
+    }
+
     private void WinnerPrompt(Board positionState)
     {
         string result = positionState.GameOverResult()[true];
@@ -29,34 +58,5 @@ public sealed class Game
         {
             Console.WriteLine("Black wins");
         }
-    }
-
-    public void Start()
-    {
-        DefaultPiecesSet pieces = new DefaultPiecesSet();
-        Board board             = new Board(pieces.White(), pieces.Black());
-        Robot Robot0            = new Robot(1, new Dictionary<string, Move>());
-        Robot Robot1            = new Robot(0, new Dictionary<string, Move>());
-        Move move               = new Move();
-        MoveTree movetree       = new MoveTree();
-        View view               = new View();
-
-        board.SetPieces(board.WhitePieces(), board.BlackPieces());
-        view.PrintBoard(board);
-
-        while (!board.GameOver())
-        {
-            move = Robot0.Calculate(board, 0);
-            board = board.Update(move);
-            view.PrintBoard(board);
-
-            if (board.GameOver()) break;
-
-            move = Robot1.Calculate(board, 0);
-            board = board.Update(move);
-            view.PrintBoard(board);
-        }
-
-        WinnerPrompt(board);
     }
 }

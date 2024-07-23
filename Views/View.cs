@@ -29,7 +29,7 @@ public class View
         Console.WriteLine(_board.FEN());
     }
 
-    public void PrintTile(Tile _tile)
+    private void PrintTile(Tile _tile)
     {
         Console.Write(_tile.Piece().Shape());
     }
